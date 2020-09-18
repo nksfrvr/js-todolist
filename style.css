@@ -1,0 +1,100 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@100;400;600;700&display=swap');
+
+
+
+*{
+  margin:0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body{
+  font-family: 'Roboto Mono',sans-serif;
+  background: url('bg.jpg');
+  background-repeat: no-repeat;
+  background-size:cover;
+  min-height: 100vh;
+}
+
+header{
+  padding:2em;
+  font-size: 1.4em;
+  font-weight: 400;
+}
+.logo-title{
+  color:grey;
+  font-weight: 400;
+}
+.sub-logo{
+  color:#e87041;
+  text-decoration: overline;
+  font-weight: 600;
+}
+
+.task-input{
+  width: 18em;
+  height: 2em;
+  outline: none;
+  border: none;
+  padding: .3em;
+  color:grey;
+  box-shadow: 0px 0px 13px rgba(0, 0, 0, .2);
+}
+
+.add-btn{
+  text-decoration: none;
+  font-size: 1em;
+  font-weight: 600;
+  text-align: center;
+  color:grey;
+  padding:.4em .2em;
+}
+.add-btn:hover{
+  color: red;
+}
+.task-body{
+
+  width: 60vw;
+}
+.task-list{
+  padding-left:2em;
+  list-style: none;
+}
+.task{
+  display: flex;
+  color:grey;
+  margin:0.5em;
+  justify-content: space-between;
+  align-items: center;
+}
+.task-title{
+  font-size:1em;
+  font-weight: 400;
+  flex:1;
+}
+.done-btn , .delete-btn{
+  background: #61f547;
+  margin: .6em;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+}
+.done-btn:hover{
+  background:green;
+  cursor: pointer;
+
+}
+.delete-btn{
+  background:#e87041;
+  margin: 0;
+}
+
+.delete-btn:hover{
+  background: red;
+  cursor:pointer;
+}
+.done{
+
+  text-decoration: line-through;
+  color:#61f547;
+}

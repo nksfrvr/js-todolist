@@ -2,9 +2,12 @@
 const taskInput = document.querySelector('.task-input');
 const addButton = document.querySelector('.add-btn');
 const taskList = document.querySelector('.task-list');
+const form = document.querySelector('form');
  //Events
  addButton.addEventListener('click', addtask);
 
+ // Adaugi un event listener pe submit care apeleaza functia onSubmit cand se face submit la formular
+ form.addEventListener('submit', onSubmit);
 
 //checking if the item exists;
  if (taskList) {
@@ -31,6 +34,7 @@ const taskList = document.querySelector('.task-list');
 
 function addtask(e) {
    //prevent default
+   // Aici vad ca nu face nimic preventDefault()-u asta deci nu cred a e necesar.
    e.preventDefault();
    console.log('hello ');
    //create a div with class of task
@@ -57,4 +61,16 @@ function addtask(e) {
    //clear the input;
    taskInput.value = '';
 
+ }
+
+ function onSubmit(e) {
+   // e asta e eventul de submit
+   // daca dai console.log(e); o sa vezi ca un obiect cu mai multe proprietati legate de event in sine
+   // inclusiv niste functii pe care le poti apela. una din functiile astea e .preventDefault()
+   // asta ii spune browserului sa anuleze orice comportament default specificat de browser
+   // in cazul formularului, atunci cand dai submit (adica enter in cazu asta) sa faca refresh la pagina
+   e.preventDefault();
+
+   // Si ca sa fie corect, cand dai enter ar trebui sa fie echivalentul butonului de + asa ca poti apela functia addtask() si aici
+   addtask(e);
  }

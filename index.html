@@ -14,7 +14,9 @@
       <h1 class="logo-title">my<span class="sub-logo">todo</span>list</h1>
       <form>
         <input placeholder="add a new task here..."class="task-input" type="text" name="" value="">
-        <a href="#" class="add-btn">+</a>
+        <!-- In loc de <a> poti sa pui un input de tip "submit". E tot un buton, dar care in contextul formularului emite eventul de submit -->
+        <!-- Asa in app.js nu mai e nevoie sa atasezi un event listener si pe butonul de add, ci doar pe eventul de submit al formularului -->
+        <input type="submit" class="add-btn" value="+" />
       </form>
     </header>
 
@@ -29,6 +31,8 @@
   </div>
 
 
+<script src="./controller.js" charset="utf-8"></script>
+<script src="./view.js" charset="utf-8"></script>
 <script src="./app.js" charset="utf-8"></script>
 </body>
 </html>

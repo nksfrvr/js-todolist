@@ -1,76 +1,44 @@
- //selector
-const taskInput = document.querySelector('.task-input');
-const addButton = document.querySelector('.add-btn');
+// Aici imbini logica din controller si din view
+
 const taskList = document.querySelector('.task-list');
 const form = document.querySelector('form');
- //Events
- addButton.addEventListener('click', addtask);
 
- // Adaugi un event listener pe submit care apeleaza functia onSubmit cand se face submit la formular
- form.addEventListener('submit', onSubmit);
+function handleFormSubmit(e) {
+  e.preventDefault(); // Ca sa nu mai faca refresh
+  const todoTitle = document.querySelector('.task-input').value; // iei valoarea din formular
 
-//checking if the item exists;
- if (taskList) {
-   taskList.addEventListener('click',deleteCheck, false);
+  // La urmatoarele doua functii ai acces chiar daca sunt in fisiere diferite, pentru ca in index.html
+  // sunt puse in ordinea corecta (app fiind ultimul).
+  addTodo(todoTitle) // Apelezi functia din controller care adauga todo-ul
+  clearInput();
+  render(todos) // Apelezi functia care updateaza interfata.
+}
 
- }
+function handleClick(e) {
+  const button = e.target;
+  if (button.className === 'delete-btn') {
+    // Daca este un buton de delete iei id-ul din atributul data-todoid si apelezi removeTodo() din controller
+    // IMPORTANT: Cand folosesti .getAttribute ca sa iei ID-ul, o sa iti returneze valoarea ca string
+    // Adica daca id-ul e 1 .getAttribute('data-todoid') o sa returneze "1".
+    // Problema e in controller cand compari daca id-ul pe care i-l dai lui removeTodo e egal cu id-ul todo-ului (linia 40)
+    // o sa dea false deoarece compari un numar cu un string (1 nu e egal cu "1")
+    // De aceea trebuie sa convertesti valoarea intr-un numar. Faci asta cu parseInt()
+    const todoId = parseInt(button.getAttribute('data-todoid'));
+    removeTodo(todoId);
+
+    // Randezi modificarile in UI
+    render(todos);
+  }
+  else if (button.className=='done-btn'){
+    // Daca e buton de toggle apelezi functia
+    const todoId = parseInt(button.getAttribute('data-todoid'));
+    toggleTodoStatus(todoId);
+    console.log('done')
+    // Randezi modificarile in UI
+    render(todos);
+  }
+}
 
 
-
- //functions
-
- function deleteCheck(e) {
-   const item = (e.target);
-   //delete item:
-   if (item.className === 'delete-btn') {
-     item.parentElement.remove();
-   }
-   //mark item  as done by toggle a 'done' class:
-   else if (item.className=='done-btn'){
-     item.parentElement.classList.toggle('done');
-   }
- }
-
-
-function addtask(e) {
-   //prevent default
-   // Aici vad ca nu face nimic preventDefault()-u asta deci nu cred a e necesar.
-   e.preventDefault();
-   console.log('hello ');
-   //create a div with class of task
-   const taskDiv = document.createElement('div') ;
-   taskDiv.classList.add('task');
-   //create a li tag with a class of task-title
-   const li = document.createElement('li')
-   li.innerText = taskInput.value;
-   li.classList.add('task-title');
-   //append li to taskDiv:
-   taskDiv.appendChild(li);
-   //create an a tag for complete buton:
-   const doneBtn = document.createElement('a');
-   doneBtn.classList.add('done-btn');
-   //append doneBtn to taskDiv:
-   taskDiv.appendChild(doneBtn);
-   //create an a tag for delete button:
-   const deleteBtn = document.createElement('a');
-   deleteBtn.classList.add('delete-btn');
-   //append deleteBtn to taskDiv:
-   taskDiv.appendChild(deleteBtn);
-   //append taskDivto taskList:
-   taskList.appendChild(taskDiv);
-   //clear the input;
-   taskInput.value = '';
-
- }
-
- function onSubmit(e) {
-   // e asta e eventul de submit
-   // daca dai console.log(e); o sa vezi ca un obiect cu mai multe proprietati legate de event in sine
-   // inclusiv niste functii pe care le poti apela. una din functiile astea e .preventDefault()
-   // asta ii spune browserului sa anuleze orice comportament default specificat de browser
-   // in cazul formularului, atunci cand dai submit (adica enter in cazu asta) sa faca refresh la pagina
-   e.preventDefault();
-
-   // Si ca sa fie corect, cand dai enter ar trebui sa fie echivalentul butonului de + asa ca poti apela functia addtask() si aici
-   addtask(e);
- }
+form.addEventListener('submit', handleFormSubmit);
+taskList.addEventListener('click', handleClick);
